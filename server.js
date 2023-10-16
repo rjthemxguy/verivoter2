@@ -4,6 +4,8 @@ import cors from 'cors'
 import connectDB from './config/db.js';
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 import userRoutes from "./routes/userRoutes.js"
+import rivcoRoutes from "./routes/rivcoRoutes.js"
+
 import cookieParser from 'cookie-parser';
 
 dotenv.config()
@@ -23,6 +25,7 @@ app.use(cors({
 
 
 app.use("/api2/users", userRoutes)
+app.use("/api2/voters",rivcoRoutes)
 
 
 
