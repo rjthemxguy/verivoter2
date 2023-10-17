@@ -2,14 +2,12 @@ import User from "../models/userModel.js"
 import asyncHandler from "../middleware/asyncHandler.js"
 import generateToken from "../utils/generateToken.js";
 
-const test = ()=> res.status(200).json("Good")
 
 const authUser = asyncHandler(async(req,res)=>{
     const {email, password} = req.body;
 
        
-        
-    const user = await User.findOne({email})
+   const user = await User.findOne({email})
     
    if(user && (await user.matchPassword(password))) {
 
@@ -84,7 +82,10 @@ const getUserProfile = asyncHandler(async(req,res)=>{
             _id:user._id,
             name: user.name,
             email: user.email,
-            isAdmin: user.isAdmin
+            isAdmin: user.isAdmin,
+            isNotify: user.isNotify,
+            isActive: user.isActive,
+            isDetails: user.isDetails
         })
     }
     else {
@@ -158,6 +159,10 @@ const updateUser = asyncHandler(async(req,res)=>{
         user.name = req.body.name || user.name
         user.email = req.body.email || user.email
         user.isAdmin = Boolean(req.body.isAdmin) || user.isAdmin
+        user.isActive = Boolean(req.body.isActive) || user.isActive
+        user.isNotify = Boolean(req.body.isNotify) || user.isNotify
+        user.isDetails = Boolean(req.body.isDetails) || user.isDetails
+
 
         const updatedUser = await user.save()
 
@@ -165,7 +170,10 @@ const updateUser = asyncHandler(async(req,res)=>{
             _id:updatedUser._id,
             name: updatedUser.name,
             email: updatedUser.email,
-            isAdmin: updatedUser.isAdmin
+            isAdmin: updatedUser.isAdmin,
+            isActive: updatedUser.isActive,
+            isDetails: updatdeUser.isDetails,
+            isNotify: updatedUser.isNotify
         })
 
         
@@ -186,8 +194,8 @@ export {
     getUserProfile,
     logoutUser,
     authUser,
-    registerUser,
-    test,
+    registerUser
+    
     
 }
 
